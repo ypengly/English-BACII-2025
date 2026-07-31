@@ -292,6 +292,13 @@ body{
 .wordbank-chip{
   font-size:13.5px; color:var(--ink-soft);
   padding:3px 9px; border:1px solid var(--rule); border-radius:20px;
+  transition:background .15s ease, border-color .15s ease, color .15s ease;
+}
+.wordbank-chip.is-used{
+  background:var(--highlight);
+  border-color:#D8B84A;
+  color:var(--ink);
+  font-weight:700;
 }
 
 .passage-text{

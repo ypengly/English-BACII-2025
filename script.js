@@ -285,9 +285,11 @@ function renderPassageBlock(page){
   WORD_BANK.forEach(word => {
     const chip = document.createElement('span');
     chip.className = 'wordbank-chip';
+    chip.dataset.word = word;
     chip.textContent = word;
     bankEl.appendChild(chip);
   });
+  refreshWordBankHighlight(page);
 
   // The passage itself, with an inline dropdown for every editable gap.
   const textEl = document.getElementById('q-passage-text');
@@ -319,9 +321,23 @@ function renderPassageBlock(page){
       select.addEventListener('change', () => {
         userAnswers[q.id] = select.value;
         updateJumpGrid();
+        refreshWordBankHighlight(page);
       });
       textEl.appendChild(select);
     }
+  });
+}
+
+// Marks each word-bank chip yellow once it's been picked for any gap,
+// so it's easy to see at a glance which words are already used.
+function refreshWordBankHighlight(page){
+  const usedWords = new Set(
+    page.items
+      .map(q => userAnswers[q.id])
+      .filter(v => v !== undefined && v !== '')
+  );
+  document.querySelectorAll('.wordbank-chip').forEach(chip => {
+    chip.classList.toggle('is-used', usedWords.has(chip.dataset.word));
   });
 }
 
