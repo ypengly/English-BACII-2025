@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Friends — English Practice Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="board-frame">
+  <div class="chalk-dust" aria-hidden="true"></div>
+
+  <!-- WELCOME SCREEN -->
+  <section id="screen-welcome" class="screen screen--active">
+    <div class="card card--welcome">
+      <p class="eyebrow">Practice Exam</p>
+      <h1 class="headline">New Friends</h1>
+      <p class="subhead">Reading &middot; Grammar &middot; Vocabulary</p>
+
+      <div class="welcome-meta">
+        <div class="meta-chip"><span class="meta-num">21</span><span class="meta-label">questions</span></div>
+        <div class="meta-chip"><span class="meta-num">40</span><span class="meta-label">points</span></div>
+        <div class="meta-chip"><span class="meta-num">3</span><span class="meta-label">parts</span></div>
+      </div>
+
+      <div class="option-row">
+        <label class="toggle">
+          <input type="checkbox" id="opt-shuffle-q">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          <span class="toggle-label">Shuffle questions</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="opt-shuffle-a">
+          <span class="toggle-track"><span class="toggle-thumb"></span></span>
+          <span class="toggle-label">Shuffle answer choices</span>
+        </label>
+      </div>
+
+      <div class="option-row">
+        <label class="timer-select">
+          <span class="timer-select-label">Timer</span>
+          <select id="opt-timer">
+            <option value="0">Off</option>
+            <option value="300">5 minutes</option>
+            <option value="600" selected>10 minutes</option>
+            <option value="900">15 minutes</option>
+            <option value="1200">20 minutes</option>
+          </select>
+        </label>
+      </div>
+
+      <button id="btn-start" class="btn btn--primary btn--lg">Start Quiz</button>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section id="screen-quiz" class="screen">
+    <div class="quiz-topbar">
+      <div class="progress-wrap">
+        <span id="progress-text" class="progress-text">Question 1 of 21</span>
+        <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+      </div>
+      <div id="timer-display" class="timer-display" hidden>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span id="timer-text">10:00</span>
+      </div>
+    </div>
+
+    <div class="card card--quiz">
+      <p id="q-part-label" class="eyebrow eyebrow--part">Part 1 · Reading</p>
+      <h2 id="q-text" class="q-text">Question text goes here</h2>
+      <p id="q-passage-note" class="passage-note" hidden></p>
+
+      <div id="q-options" class="options-list"></div>
+
+      <div id="q-passage-block" class="passage-block" hidden>
+        <div id="q-wordbank-ref" class="wordbank-ref"></div>
+        <p id="q-passage-text" class="passage-text"></p>
+      </div>
+
+      <div id="q-shortanswer-wrap" class="shortanswer-wrap" hidden></div>
+    </div>
+
+    <div class="chalk-tray">
+      <button id="btn-prev" class="btn btn--ghost">&larr; Previous</button>
+      <button id="btn-flag" class="btn btn--flag" title="Mark for review">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V4a1 1 0 0 1 1-1h13.4a1 1 0 0 1 .6 1.8l-4 3.2 4 3.2a1 1 0 0 1-.6 1.8H5"/></svg>
+      </button>
+      <button id="btn-next" class="btn btn--primary">Next &rarr;</button>
+      <button id="btn-submit" class="btn btn--submit" hidden>Submit Exam</button>
+    </div>
+
+    <div class="jumpgrid" id="jumpgrid" aria-label="Jump to question"></div>
+  </section>
+
+  <!-- RESULTS SCREEN -->
+  <section id="screen-results" class="screen">
+    <div class="card card--results">
+      <p class="eyebrow">Results</p>
+      <h2 id="result-headline" class="headline headline--sm">Nice work!</h2>
+
+      <div class="score-ring-wrap">
+        <svg class="score-ring" viewBox="0 0 140 140">
+          <circle class="score-ring-bg" cx="70" cy="70" r="60"/>
+          <circle id="score-ring-fg" class="score-ring-fg" cx="70" cy="70" r="60"/>
+        </svg>
+        <div class="score-ring-center">
+          <span id="score-percent">0%</span>
+          <span id="score-fraction" class="score-fraction">0 / 21</span>
+        </div>
+      </div>
+
+      <p id="score-feedback" class="score-feedback">Keep going!</p>
+
+      <div class="results-breakdown" id="results-breakdown"></div>
+
+      <div class="results-actions">
+        <button id="btn-review" class="btn btn--primary">Review Answers</button>
+        <button id="btn-retake" class="btn btn--ghost">Retake Quiz</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEW SCREEN -->
+  <section id="screen-review" class="screen">
+    <div class="review-header">
+      <p class="eyebrow">Answer Review</p>
+      <h2 class="headline headline--sm">Where it went right (and wrong)</h2>
+    </div>
+    <div id="review-list" class="review-list"></div>
+    <div class="chalk-tray chalk-tray--static">
+      <button id="btn-back-results" class="btn btn--ghost">&larr; Back to results</button>
+      <button id="btn-retake-2" class="btn btn--primary">Retake Quiz</button>
+    </div>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
