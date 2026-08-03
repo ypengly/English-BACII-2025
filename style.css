@@ -175,7 +175,7 @@ body{
 }
 .btn:active{ transform:scale(0.97); }
 .btn--primary{ background:var(--pen-blue); color:#fff; border-color:var(--pen-blue); }
-.btn--primary:hover{ background:#213c6b; }
+.btn--primary:hover{ background:#de46e1; }
 .btn--lg{ width:100%; padding:15px; font-size:16px; }
 .btn--ghost{ background:#fff; color:var(--ink-soft); border-color:var(--rule); }
 .btn--ghost:hover{ border-color:var(--ink-faint); color:var(--ink); }
